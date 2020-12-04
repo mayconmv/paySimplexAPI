@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using paySimplexBusiness.Business;
 using paySimplexBusiness.Contracts;
 using paySimplexData.Context;
@@ -14,10 +12,7 @@ using paySimplexData.Contracts;
 using paySimplexData.Repository;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
@@ -44,8 +39,8 @@ namespace paySimplexAPI
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
             });
 
             services.AddMvc()
@@ -72,7 +67,8 @@ namespace paySimplexAPI
 
             #region SQL
 
-            services.AddDbContext<paySimplexContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddDbContext<paySimplexContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection"))
+                                                                       .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             #endregion
 
@@ -92,9 +88,8 @@ namespace paySimplexAPI
 
             #region json
             services.AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+                    .AddNewtonsoftJson(options => 
+                                       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             #endregion
         }
 
@@ -110,9 +105,9 @@ namespace paySimplexAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(Configuration.GetValue<string>("SwaggerEndpoint"), "WebApi getBand.");
+                c.SwaggerEndpoint(Configuration.GetValue<string>("SwaggerEndpoint"), "WebApi paySimplex.");
                 c.RoutePrefix = string.Empty;
-                c.DocumentTitle = "WebApi getBand documentation";
+                c.DocumentTitle = "WebApi paySimplex documentation";
                 c.DocExpansion(DocExpansion.None);
             });
 

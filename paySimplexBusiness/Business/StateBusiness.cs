@@ -26,7 +26,7 @@ namespace paySimplexBusiness.Business
 
                 _stateRepository.Create(castedObject, userId);
 
-                return castedObject.ToStateSuccessModel(StateResources.CreatedSuccessfull);
+                return castedObject.ToStateResultModel(StateResources.CreatedSuccessfull);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace paySimplexBusiness.Business
 
                 _stateRepository.Delete(castedObject);
 
-                return castedObject.ToStateSuccessModel(StateResources.DeleteSuccessfull);
+                return castedObject.ToStateResultModel(StateResources.DeleteSuccessfull);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _stateRepository.Get(x => x.Id > 0);
+                return _stateRepository.Get(x => x.Id > 0)
+                                       .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -66,7 +67,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _stateRepository.Get(x => x.Id == id);
+                return _stateRepository.Get(x => x.Id == id)
+                                       .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -78,7 +80,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _stateRepository.GetMany(x => x.Name == name)?[0];
+                return _stateRepository.GetMany(x => x.Name == name)?[0]
+                                       .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -90,7 +93,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _stateRepository.GetMany(x => x.Name.Contains(arguments));
+                return _stateRepository.GetMany(x => x.Name.Contains(arguments))
+                                       .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -105,7 +109,7 @@ namespace paySimplexBusiness.Business
                 var castedObject = obj.ToStateEntity();
                 _stateRepository.Update(castedObject, userId);
 
-                return castedObject.ToStateSuccessModel(StateResources.UpdatedSuccessfull);
+                return castedObject.ToStateResultModel(StateResources.UpdatedSuccessfull);
             }
             catch (Exception ex)
             {
@@ -156,9 +160,9 @@ public static class StateExtensions
         }).ToList();
     }
 
-    public static BaseSuccessModel ToStateSuccessModel(this State obj, string message)
+    public static BaseResultModel ToStateResultModel(this State obj, string message)
     {
-        return new BaseSuccessModel
+        return new BaseResultModel
         {
             Result = obj,
             Message = message

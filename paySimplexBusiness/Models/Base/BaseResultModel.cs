@@ -2,7 +2,7 @@
 
 namespace paySimplexBusiness.Models
 {
-    public class BaseSuccessModel
+    public class BaseResultModel
     {
         public string Message { get; set; }
 

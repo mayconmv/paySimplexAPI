@@ -24,7 +24,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetById(long id)
         {
             var result = _taskContract.GetById(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -34,7 +34,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetMany(string arguments)
         {
             var result = _taskContract.GetMany(arguments);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -44,7 +44,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetByName(string name)
         {
             var result = _taskContract.GetByName(name);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -54,7 +54,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetTimeInProgress(long id)
         {
             var result = _taskContract.GetTimeInProgress(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -66,37 +66,37 @@ namespace paySimplexAPI.Controllers
         public IActionResult Create(TaskModel taskModel)
         {
             var result = _taskContract.Create(taskModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public IActionResult Update(TaskModel taskModel)
         {
             var result = _taskContract.Update(taskModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         public IActionResult Delete(long id)
         {
             var result = _taskContract.Delete(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("UploadFile")]
+        [HttpPatch("UploadFile")]
         public IActionResult UploadFile(IFormFile file, long taskId)
         {
             var result = _taskContract.UploadFile(taskId, file.FileName, ConvertToBytes(file), _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);

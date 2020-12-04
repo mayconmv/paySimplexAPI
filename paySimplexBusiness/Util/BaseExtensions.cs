@@ -15,9 +15,9 @@ namespace paySimplexBusiness.Util
             };
         }
 
-        public static BaseSuccessModel ToBaseSuccessModel(this object obj, string message)
+        public static BaseResultModel ToBaseSuccessModel(this object obj, string message)
         {
-            return new BaseSuccessModel
+            return new BaseResultModel
             {
                 Result = obj,
                 Message = message

@@ -18,31 +18,31 @@ namespace paySimplexAPI.Controllers
         }
 
         #region Get
-        [HttpGet]
+        [HttpGet("GetById")]
         public IActionResult GetById(long id)
         {
             var result = _stateContract.GetById(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetMany")]
         public IActionResult GetMany(string arguments)
         {
             var result = _stateContract.GetMany(arguments);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetByName")]
         public IActionResult GetByName(string name)
         {
             var result = _stateContract.GetByName(name);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -54,27 +54,27 @@ namespace paySimplexAPI.Controllers
         public IActionResult Create(StateModel stateModel)
         {
             var result = _stateContract.Create(stateModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public IActionResult Update(StateModel stateModel)
         {
             var result = _stateContract.Update(stateModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         public IActionResult Delete(long id)
         {
             var result = _stateContract.Delete(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);

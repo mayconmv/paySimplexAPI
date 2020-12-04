@@ -18,5 +18,11 @@
     <ProjectReference Include="..\paySimplexBusiness\paySimplexBusiness.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="paySimplexAPI.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

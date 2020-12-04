@@ -26,7 +26,7 @@ namespace paySimplexBusiness.Business
 
                 _userRepository.Create(castedObject, userId);
 
-                return castedObject.ToUserSuccessModel(UserResources.CreatedSuccessfull);
+                return castedObject.ToUserResultModel(UserResources.CreatedSuccessfull);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace paySimplexBusiness.Business
                 
                 _userRepository.Delete(castedObject);
 
-                return castedObject.ToUserSuccessModel(UserResources.DeleteSuccessfull);
+                return castedObject.ToUserResultModel(UserResources.DeleteSuccessfull);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _userRepository.Get(x => x.Id > 0);
+                return _userRepository.Get(x => x.Id > 0)
+                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -66,7 +67,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _userRepository.Get(x => x.Id == id);
+                return _userRepository.Get(x => x.Id == id)
+                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -78,7 +80,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _userRepository.GetMany(x => x.Name == name)?[0];
+                return _userRepository.GetMany(x => x.Name == name)?[0]
+                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -90,7 +93,8 @@ namespace paySimplexBusiness.Business
         {
             try
             {
-                return _userRepository.GetMany(x => x.Name == name );
+                return _userRepository.GetMany(x => x.Name == name )
+                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -155,9 +159,9 @@ public static class UserExtensions
         }).ToList();
     }
 
-    public static BaseSuccessModel ToUserSuccessModel(this User obj, string message)
+    public static BaseResultModel ToUserResultModel(this User obj, string message)
     {
-        return new BaseSuccessModel
+        return new BaseResultModel
         {
             Result = obj,
             Message = message

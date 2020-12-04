@@ -95,7 +95,7 @@ namespace paySimplexBusiness.Business
             {
                 return _taskRepository.GetMany(x => x.Title.Contains(arguments) ||
                                                     x.Description.Contains(arguments))
-                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull); ;
+                                      .ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -108,15 +108,16 @@ namespace paySimplexBusiness.Business
             try
             {
                 var result = _taskRepository.Get(x => x.Id == id, new List<string> { "State", "User" });
-                if (result.EndDate != null)
-                    return new TaskEstimatedTimeModel()
-                    {
-                        Days = result.EndDate.Value.Subtract(result.StartDate.Value).Days,
-                        Hours = result.EndDate.Value.Subtract(result.StartDate.Value).Hours,
-                        Minutes = result.EndDate.Value.Subtract(result.StartDate.Value).Minutes
-                    }.ToBaseSuccessModel(CommonResources.GetSuccessfull);
-                else
-                    return result.ToTaskResultModel(TaskResources.ErrorOnGetEndDate, true);
+
+                //If does'nt have end date, consider use actual date
+                DateTime endDate = result?.EndDate ?? DateTime.Now;
+
+                return new TaskEstimatedTimeModel()
+                {
+                    Days = endDate.Subtract(result.StartDate.Value).Days,
+                    Hours = endDate.Subtract(result.StartDate.Value).Hours,
+                    Minutes = endDate.Subtract(result.StartDate.Value).Minutes
+                }.ToBaseSuccessModel(CommonResources.GetSuccessfull);
             }
             catch (Exception ex)
             {
@@ -232,9 +233,9 @@ public static class TaskExtensions
         }).ToList();
     }
 
-    public static BaseSuccessModel ToTaskResultModel(this Task obj, string message, bool error = false)
+    public static BaseResultModel ToTaskResultModel(this Task obj, string message, bool error = false)
     {
-        return new BaseSuccessModel
+        return new BaseResultModel
         {
             Error = error,
             Result = obj,

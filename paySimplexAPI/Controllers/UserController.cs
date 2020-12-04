@@ -22,7 +22,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetById(long id)
         {
             var result = _userContract.GetById(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -32,7 +32,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetMany(string arguments)
         {
             var result = _userContract.GetMany(arguments);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -42,7 +42,7 @@ namespace paySimplexAPI.Controllers
         public IActionResult GetByName(string name)
         {
             var result = _userContract.GetByName(name);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
@@ -54,27 +54,27 @@ namespace paySimplexAPI.Controllers
         public IActionResult Create(UserModel userModel)
         {
             var result = _userContract.Create(userModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public IActionResult Update(UserModel userModel)
         {
             var result = _userContract.Update(userModel, _applicationUserModel.Id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         public IActionResult Delete(long id)
         {
             var result = _userContract.Delete(id);
-            if (result is BaseSuccessModel)
+            if (result is BaseResultModel)
                 return Ok(result);
             else
                 return BadRequest(result);

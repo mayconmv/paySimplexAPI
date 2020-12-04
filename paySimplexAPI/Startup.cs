@@ -64,7 +64,6 @@ namespace paySimplexAPI
             services.AddTransient<ITaskContract, TaskBusiness>();
             services.AddTransient<IStateContract, StateBusiness>();
 
-            // Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<IStateRepository, StateRepository>();
